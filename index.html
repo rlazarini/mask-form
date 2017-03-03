@@ -8,6 +8,7 @@
 			display: block;
 			float: left;
 			clear: both;
+			padding: 10px;
 		}
 		ul {
 			padding: 0;
@@ -27,11 +28,23 @@
 </head>
 <body>
 	<form action="" id="form" novalidate>
-		<input type="text">
-		<input type="text">
-		<input type="text">
+		<input type="text" data-type="cpf" mask="mask">
+		<input type="text" data-type="currency" data-monetary="лв" data-monetary-imperial="true" mask="mask" placeholder="currency">
+		<input type="text" data-type="currency" data-monetary="€" data-monetary-revert="true" mask="mask" placeholder="currency">
+		<input type="text" data-type="currency" mask="mask" placeholder="currency">
+		<input type="text" data-type="cpf" mask="mask">
+		<input type="text" data-type="phone" mask="mask">
+		<input type="text" data-type="myowndatatype" mask="mask" placeholder="myowndatatype">
+		<input type="text" data-type="cpf">
 		<input type="submit" value="send">
 	</form>
 	<script src="index.js"></script>
+	<script>
+		var form = document.getElementById('form')
+		,	obj  = {
+			'myowndatatype': 'AAA/000-000+A'
+		}
+		maskForm._maskForm(form,obj);
+	</script>
 </body>
 </html>
