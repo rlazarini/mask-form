@@ -21,28 +21,33 @@
 		li input {
 			float: none;
 		}
-		.error {
-			border: 2px solid red;
-		}
 	</style>
 </head>
 <body>
 	<form action="" id="form" novalidate>
 		<input type="text" data-type="cpf" mask="mask">
-		<input type="text" data-type="currency" data-monetary="лв" data-monetary-imperial="true" mask="mask" placeholder="currency">
-		<input type="text" data-type="currency" data-monetary="€" data-monetary-revert="true" mask="mask" placeholder="currency">
+		<input type="text" data-type="currency" data-monetary="лв" data-monetary-imperial mask placeholder="currency">
+		<input type="text" data-type="currency" data-monetary="R$" data-monetary-imperial data-monetary-revert mask="mask" placeholder="currency">
 		<input type="text" data-type="currency" mask="mask" placeholder="currency">
 		<input type="text" data-type="cpf" mask="mask">
 		<input type="text" data-type="phone" mask="mask">
 		<input type="text" data-type="myowndatatype" mask="mask" placeholder="myowndatatype">
+		<input type="text" data-type="date" mask placeholder="Date sem data-format">
+		<input type="text" data-type="date" data-format="00/00/0000" mask placeholder="Date com data-format">
 		<input type="text" data-type="cpf">
+		<input type="cpf" mask placeholder="type=cpf">
+		<input type="text" data-type="cpfcnpj" placeholder="CPF/CNPJ" mask="mask" maxlength="18">
+		<input type="text" data-type="myownmask" mask="mask" placeholder="alternates">
+		<input type="myowntype" mask="mask" placeholder="alternates">
 		<input type="submit" value="send">
 	</form>
 	<script src="index.js"></script>
 	<script>
 		var form = document.getElementById('form')
 		,	obj  = {
-			'myowndatatype': 'AAA/000-000+A'
+			'myowndatatype': 'AAA/000-000+A',
+			'myownmask': 'AAA/AA-000-0',
+			'myowntype': '000.000-A-B-C'
 		}
 		maskForm._maskForm(form,obj);
 	</script>

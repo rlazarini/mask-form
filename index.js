@@ -19,15 +19,26 @@ function init(){
         ,   charPattern     = /[a-zA-Z]/
         ,   numberPattern   = /[0-9]/
         ,   excludePattern  = /[^0-9]/g
-        ,   monetary        = inputSelector.getAttribute('data-monetary') || inputSelector.dataset.monetary || 'R$'
-        ,   imperial        = inputSelector.getAttribute('data-monetary-imperial') || inputSelector.dataset.monetaryImperial || false
-        ,   revertMonetary  = inputSelector.getAttribute('data-monetary-revert') || inputSelector.dataset.monetaryRevert || false
+        ,   monetary        = inputSelector.getAttribute('data-monetary')          || inputSelector.dataset.monetary || 'R$'
+        ,   imperial        = inputSelector.hasAttribute('data-monetary-imperial') || false
+        ,   revertMonetary  = inputSelector.hasAttribute('data-monetary-revert')   || false
         ,   newValue        = ''
+        ,   testValue       = ''
         ,   objMask         = (obj) ? obj[inputDataType] || obj[inputType] : '';
-        
+
         // CPF MASK
         if (inputType === 'cpf' || inputDataType === 'cpf') {
             mask = (!objMask) ? '000.000.000-00' : objMask;
+        }
+
+        // CNPJ MASK
+        if (inputType === 'cnpj' || inputDataType === 'cnpj') {
+            mask = (!objMask) ? '00.000.000/0000-00' : objMask;
+        }
+
+        // CPF/CNPJ MASK
+        if (inputType === 'cpfcnpj' || inputDataType === 'cpfcnpj') {
+            mask = (!objMask) ? '00.000.000/0000-00' : objMask;
         }
 
         // TELEFONE (FIXO/MOVEL) MASK
@@ -42,7 +53,7 @@ function init(){
 
         // DATE MASK
         else if (inputType === 'date' || inputDataType === 'date') {
-            mask = (!objMask) ? '00/00/0000' : objMask;
+            mask = (!objMask) ? inputSelector.getAttribute('data-format') || inputSelector.dataset.format || '0000/00/00' : objMask;
         }
 
         // MONEY
@@ -99,7 +110,7 @@ function init(){
 
             // Invertemos o array de retorno, convertemos em string e retornamos como novo valor
             newValue = returnArray.reverse().join("");
-        } else if ((inputType === 'phone' || inputDataType === 'phone') && inputValue.length <= mask.length) {
+        } else if ((inputType === 'phone' || inputDataType === 'phone') && inputValue.length <= mask.length && !objMask) {
             newValue = inputValue.replace(/\D/g,"");
             newValue = newValue.replace(/^(\d\d)(\d)/g,"($1) $2");
             if (inputValue.length <= mask.length - 1) {
@@ -107,11 +118,28 @@ function init(){
             } else {
                 newValue = newValue.replace(/(\d{5})(\d)/,"$1-$2");
             }
-        } else if (inputType === 'number') {
+        } else if ((inputType === 'cpfcnpj' || inputDataType === 'cpfcnpj') && !objMask) {
+            mask = '000.000.000-00';
             newValue = inputValue.replace(/\D/g,"");
+            testValue = inputValue.replace(/\.|\-|\//g,"");
+            if (testValue.length <= mask.length - 3) {
+                newValue = newValue.replace(/(\d{3})/,"$1.")
+                newValue = newValue.replace(/(\d{3})?\.(\d{3})/,"$1.$2.")
+                newValue = newValue.replace(/(\d{3})?\.(\d{3})?\.(\d{3})(\d{2})/,"$1.$2.$3-$4")
+            } 
+            if (testValue.length > mask.length - 3) {
+                mask = '00.000.000/0000-00';
+                if (inputValue.length <= mask.length) {
+                    newValue = newValue.replace(/(\d{2})(\d{1})\.?(\d{2})(\d{1})\.?(\d{2})(\d{1})\-?(\d{0,3})(\d{0,2})/,"$1.$2$3.$4$5/$6$7-$8")
+                }
+            }
+        } else if (inputType === 'number' && !objMask) {
+            newValue = inputValue.replace(/\D/g,"");
+        } else if (inputType === 'text' && !objMask) {
+            newValue = inputValue;
         } else {
             for (var vId = 0, mId = 0 ; mId < mask.length ; mId++) {
-                if (mId >= inputValue.length)
+                if (!inputValue[vId])
                     break;
                 if (mask[mId] === '0' && inputValue[vId].match(numberPattern) === null) {
                     break;
@@ -120,8 +148,6 @@ function init(){
                 if (mask[mId] === 'A' && inputValue[vId].match(charPattern) === null) {
                     break;
                 }
-                console.log("mask[mId] :: ", mask[mId])
-                console.log("inputValue[vId] :: ", inputValue[vId])
                 if (mask[mId].match(literalPattern) === null) {
                     if (inputValue[vId] !== mask[mId]) {
                         newValue += mask[mId];
@@ -134,6 +160,9 @@ function init(){
 
         if (currencyMask === true) {
             newValue = (revertMonetary) ? newValue + ' ' + monetary.replace(/ /g, '') : monetary.replace(/ /g, '') + ' ' + newValue;
+            if (newValue.replace(/ /g, '') === monetary.replace(/ /g, '')) {
+                newValue = '';
+            }
         }
 
         input.value = newValue;
