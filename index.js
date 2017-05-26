@@ -137,8 +137,8 @@ function init(){
                 newValue = newValue.replace(/(\d{5})(\d)/,"$1-$2");
             }
         } else if ((inputType === 'codePhone' || inputDataType === 'codePhone') && inputValue.length <= mask.length && !objMask) {
-            newValue = inputValue.replace(/\D/g,"");
-            newValue = newValue.replace(/^(\d)/g,"$1");
+            newValue = inputValue.replace(/\D/g,"").replace(/[0]/g,"");
+            newValue = newValue.replace(/^(\d+)/g,"($1)");
         } else if ((inputType === 'cpfcnpj' || inputDataType === 'cpfcnpj') && !objMask) {
             mask = '000.000.000-00';
             newValue = inputValue.replace(/\D/g,"");
