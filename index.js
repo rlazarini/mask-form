@@ -3,7 +3,7 @@
 function init(){
     function _mF(form,obj) {
         var fullList = $byAttr('mask', '', form);
-        $bindElm(fullList, 'keyup change', function(e) {$cMF(this, obj, e)})
+        fullList && $bindElm(fullList, 'keyup change', function(e) {$cMF(this, obj, e)})
     }
 
     function $cMF(inputSelector, obj, evt) {
@@ -32,12 +32,12 @@ function init(){
         }
 
         // CNPJ MASK
-        if (inputType === 'cnpj' || inputDataType === 'cnpj') {
+        else if (inputType === 'cnpj' || inputDataType === 'cnpj') {
             mask = (!objMask) ? '00.000.000/0000-00' : objMask;
         }
 
         // CPF/CNPJ MASK
-        if (inputType === 'cpfcnpj' || inputDataType === 'cpfcnpj') {
+        else if (inputType === 'cpfcnpj' || inputDataType === 'cpfcnpj') {
             mask = (!objMask) ? '00.000.000/0000-00' : objMask;
         }
 
@@ -53,7 +53,7 @@ function init(){
 
         // DATE MASK
         else if (inputType === 'date' || inputDataType === 'date') {
-            mask = (!objMask) ? inputSelector.getAttribute('data-format') || inputSelector.dataset.format || '0000/00/00' : objMask;
+            mask = (!objMask) ? inputSelector.getAttribute('data-template') || inputSelector.dataset.template || '0000/00/00' : objMask;
         }
 
         // MONEY
@@ -135,12 +135,13 @@ function init(){
             }
         } else if (inputType === 'number' && !objMask) {
             newValue = inputValue.replace(/\D/g,"");
-        } else if (inputType === 'text' && !objMask) {
+        } else if (inputType === 'text' && !objMask && !mask) {
             newValue = inputValue;
         } else {
             for (var vId = 0, mId = 0 ; mId < mask.length ; mId++) {
-                if (!inputValue[vId])
+                if (!inputValue[vId]){ 
                     break;
+                }
                 if (mask[mId] === '0' && inputValue[vId].match(numberPattern) === null) {
                     break;
                 }
