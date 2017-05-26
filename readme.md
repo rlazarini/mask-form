@@ -1,6 +1,6 @@
 # [Mask Form](https://www.npmjs.com/package/mask-form)
 
-[![npm version](https://badge.fury.io/js/mask-form.svg)](https://badge.fury.io/js/mask-form)
+[![npm version](https://badge.fury.io/js/mask-form.svg)](https://badge.fury.io/js/mask-form) [![Bower version](https://badge.fury.io/bo/mask-form.svg)](https://badge.fury.io/bo/mask-form)
 
 A mask to input[mask] fields;
 
