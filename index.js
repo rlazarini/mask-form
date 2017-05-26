@@ -246,12 +246,4 @@ try {
 } catch(err){
     // using like a library 
     window.maskForm = init();
-}    }
-}
-
-try {
-    module.exports = init();
-} catch(err){
-    // using like a library 
-    window.maskForm = init();
 }
