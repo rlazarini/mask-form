@@ -51,7 +51,7 @@ function init(){
             mask = (!objMask) ? '00000-0000' : objMask;
         }
 
-        // TELEFONE (FIXO/MOVEL) WITHOUT CODE MASK
+        // CODE PHONE MASK
         else if (inputType === 'codePhone' || inputDataType === 'codePhone') {
             mask = (!objMask) ? '(00)' : objMask;
         }
@@ -69,7 +69,7 @@ function init(){
         // MONEY
         else if (inputType === 'currency' || inputDataType === 'currency') {
             mask = (!objMask) ? '000.000.000.000.000.000.000,00' : objMask;
-            mask = (imperial) ? (mask.replace(/\,/g,'_+_+_+_+').replace(/\./g,',').replace(/\_\+\_\+\_\+\_\+/g,'.')) : mask;
+            mask = (imperial) ? '000,000,000,000,000,000,000.00' : mask;
             reverseMask = true;
             currencyMask = true;
         }
@@ -136,6 +136,9 @@ function init(){
             } else {
                 newValue = newValue.replace(/(\d{5})(\d)/,"$1-$2");
             }
+        } else if ((inputType === 'codePhone' || inputDataType === 'codePhone') && inputValue.length <= mask.length && !objMask) {
+            newValue = inputValue.replace(/\D/g,"");
+            newValue = newValue.replace(/^(\d)/g,"$1");
         } else if ((inputType === 'cpfcnpj' || inputDataType === 'cpfcnpj') && !objMask) {
             mask = '000.000.000-00';
             newValue = inputValue.replace(/\D/g,"");
