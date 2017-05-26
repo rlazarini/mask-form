@@ -143,12 +143,10 @@ function init(){
                     break;
                 }
                 if (mask[mId] === '0' && inputValue[vId].match(numberPattern) === null) {
-                    console.error('input igual mascara 0')
                     break;
                 }
 
                 if (mask[mId] === 'A' && inputValue[vId].match(charPattern) === null) {
-                    console.error('input igual mascara A')
                     break;
                 }
                 if (mask[mId].match(literalPattern) === null) {
@@ -241,6 +239,14 @@ function init(){
     return {
         _maskForm : _mF
     }
+}
+
+try {
+    module.exports = init();
+} catch(err){
+    // using like a library 
+    window.maskForm = init();
+}    }
 }
 
 try {
