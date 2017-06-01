@@ -130,7 +130,6 @@ function init(){
             }
         } else if ((inputType === 'customPhone' || inputDataType === 'customPhone') && inputValue.length <= mask.length && !objMask) {
             newValue = inputValue.replace(/\D/g,"");
-            newValue = newValue.replace(/^(\d)/g,"$1");
             if (inputValue.length <= mask.length - 1) {
                 newValue = newValue.replace(/(\d{4})(\d)/,"$1-$2");
             } else {
@@ -223,6 +222,15 @@ function init(){
         evt = evt.split(' ');
         elms = Array.isArray(elms) || $isNodeList(elms) ? elms : [elms];
         for(var i = 0, lgt = elms.length; i < lgt; i++){
+            
+            // Bug fix Samsung Keyboard
+            if( /Android|webOS|Opera Mini/i.test(navigator.userAgent) ) {
+                elms[i].setAttribute("autocomplete", "off");
+                elms[i].setAttribute("autocorrect","off");
+                elms[i].setAttribute("autocapitalize","off");
+                elms[i].setAttribute("spellcheck","false");
+            }
+
             for(var j = 0, jlgt = evt.length; j < jlgt; j++){
                 elms[i].addEventListener(evt[j], callback);
             }
