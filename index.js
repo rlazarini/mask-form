@@ -51,6 +51,16 @@ function init(){
             mask = (!objMask) ? '00000-0000' : objMask;
         }
 
+        // TELEFONE (FIXO) WITHOUT CODE MASK
+        else if (inputType === 'customHomePhone' || inputDataType === 'customHomePhone') {
+            mask = (!objMask) ? '0000-0000' : objMask;
+        }
+
+        // TELEFONE (MOVEL) WITHOUT CODE MASK
+        else if (inputType === 'customCelPhone' || inputDataType === 'customCelPhone') {
+            mask = (!objMask) ? '00000-0000' : objMask;
+        }
+
         // CODE PHONE MASK
         else if (inputType === 'codePhone' || inputDataType === 'codePhone') {
             mask = (!objMask) ? '(00)' : objMask;
@@ -135,6 +145,12 @@ function init(){
             } else {
                 newValue = newValue.replace(/(\d{5})(\d)/,"$1-$2");
             }
+        } else if ((inputType === 'customHomePhone' || inputDataType === 'customHomePhone') && inputValue.length <= mask.length && !objMask) {
+            newValue = inputValue.replace(/\D/g,"");
+            newValue = newValue.replace(/(\d{4})(\d)/,"$1-$2");
+        } else if ((inputType === 'customCelPhone' || inputDataType === 'customCelPhone') && inputValue.length <= mask.length && !objMask) {
+            newValue = inputValue.replace(/\D/g,"");
+            newValue = newValue.replace(/(\d{5})(\d)/,"$1-$2");
         } else if ((inputType === 'codePhone' || inputDataType === 'codePhone') && inputValue.length <= mask.length && !objMask) {
             newValue = inputValue.replace(/\D/g,"").replace(/[0]/g,"");
             newValue = newValue.replace(/^(\d+)/g,"($1)");
