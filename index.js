@@ -1,6 +1,7 @@
 'use strict';
 
 function init(){
+    var mobileVersion = /Android\s+([\d\.]+)/i.exec(navigator.userAgent);
     function _mF(form,obj) {
         var fullList = $byAttr('mask', '', form);
         fullList && $bindElm(fullList, 'keyup change', function(e) {$cMF(this, obj, e)})
@@ -245,6 +246,25 @@ function init(){
                 elms[i].setAttribute("autocorrect","off");
                 elms[i].setAttribute("autocapitalize","off");
                 elms[i].setAttribute("spellcheck","false");
+                elms[i].style.cssText += '-webkit-user-modify: read-write-plaintext-only;';
+
+                if (!!(mobileVersion) && parseFloat(mobileVersion[1]) < 6) {
+                    var inputSelector   = elms[i];
+                    var inputType       = inputSelector.getAttribute('type')      || inputSelector.type;
+                    var inputDataType   = inputSelector.getAttribute('data-type') || inputSelector.dataset.type;
+
+                    if (
+                        inputType === 'cpf'              || inputDataType === 'cpf'              || 
+                        inputType === 'cpfcnpj'          || inputDataType === 'cpfcnpj'          || 
+                        inputType === 'phone'            || inputDataType === 'phone'            || 
+                        inputType === 'customPhone'      || inputDataType === 'customPhone'      || 
+                        inputType === 'customHomePhone'  || inputDataType === 'customHomePhone'  || 
+                        inputType === 'customCelPhone'   || inputDataType === 'customCelPhone'   || 
+                        inputType === 'codePhone'        || inputDataType === 'codePhone'
+                        ) {
+                        elms[i].setAttribute("type","tel");
+                    }
+                }
             }
 
             for(var j = 0, jlgt = evt.length; j < jlgt; j++){

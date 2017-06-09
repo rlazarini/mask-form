@@ -4,6 +4,8 @@
 
 A mask to input[mask] fields;
 
+PS: The Readme document is not up to date.
+
 ## Using Mask Form you can:
   - Using default mask rules;
   - Create your own masks;
