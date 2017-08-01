@@ -248,7 +248,7 @@ function init(){
                 elms[i].setAttribute("spellcheck","false");
                 elms[i].style.cssText += '-webkit-user-modify: read-write-plaintext-only;';
 
-                if (!!(mobileVersion) && parseFloat(mobileVersion[1]) < 6) {
+                if ((!!(mobileVersion) && parseFloat(mobileVersion[1]) < 6) || navigator.userAgent.match(/SAMSUNG|SGH-[I|N|T]|GT-[I|P|N]|SM-[N|P|T|Z|G]|SHV-E|SCH-[I|J|R|S]|SPH-L/i)) {
                     var inputSelector   = elms[i];
                     var inputType       = inputSelector.getAttribute('type')      || inputSelector.type;
                     var inputDataType   = inputSelector.getAttribute('data-type') || inputSelector.dataset.type;
