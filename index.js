@@ -260,7 +260,8 @@ function init(){
                         inputType === 'customPhone'      || inputDataType === 'customPhone'      || 
                         inputType === 'customHomePhone'  || inputDataType === 'customHomePhone'  || 
                         inputType === 'customCelPhone'   || inputDataType === 'customCelPhone'   || 
-                        inputType === 'codePhone'        || inputDataType === 'codePhone'
+                        inputType === 'codePhone'        || inputDataType === 'codePhone'        || 
+                        inputType === 'date'             || inputDataType === 'date'
                         ) {
                         elms[i].setAttribute("type","tel");
                     }
