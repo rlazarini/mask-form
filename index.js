@@ -170,7 +170,7 @@ function init(){
                     newValue = newValue.replace(/(\d{2})(\d{1})\.?(\d{2})(\d{1})\.?(\d{2})(\d{1})\-?(\d{0,3})(\d{0,2})/,"$1.$2$3.$4$5/$6$7-$8")
                 }
             }
-        } else if (inputType === 'number' && !objMask) {
+        } else if ((inputType === 'number' || inputDataType === 'integer') && !objMask) {
             newValue = inputValue.replace(/\D/g,"");
         } else if (inputType === 'text' && !objMask && !mask) {
             newValue = inputValue;
