@@ -27,6 +27,8 @@ function init(){
         ,   testValue       = ''
         ,   objMask         = (obj) ? obj[inputDataType] || obj[inputType] : '';
 
+        // obj = (obj === undefined) ? {} : obj;
+
         // CPF MASK
         if (inputType === 'cpf' || inputDataType === 'cpf') {
             mask = (!objMask) ? '000.000.000-00' : objMask;
@@ -86,7 +88,7 @@ function init(){
         }
 
         // CUSTOM MASK
-        else if (obj[inputDataType] || obj[inputType]) {
+        else if (!!objMask && (obj[inputDataType] || obj[inputType])) {
             mask = objMask;
             if (mask.indexOf('A') >= 0) {
                 literalPattern = /[0-A]/;
