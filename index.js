@@ -170,7 +170,7 @@ function init(){
                     newValue = newValue.replace(/(\d{2})(\d{1})\.?(\d{2})(\d{1})\.?(\d{2})(\d{1})\-?(\d{0,3})(\d{0,2})/,"$1.$2$3.$4$5/$6$7-$8")
                 }
             }
-        } else if ((inputType === 'number' || inputDataType === 'integer') && !objMask) {
+        } else if ((inputType === 'number' || inputType === 'integer' || inputDataType === 'integer') && !objMask) {
             newValue = inputValue.replace(/\D/g,"");
         } else if (inputType === 'text' && !objMask && !mask) {
             newValue = inputValue;
@@ -261,7 +261,9 @@ function init(){
                         inputType === 'customHomePhone'  || inputDataType === 'customHomePhone'  || 
                         inputType === 'customCelPhone'   || inputDataType === 'customCelPhone'   || 
                         inputType === 'codePhone'        || inputDataType === 'codePhone'        || 
-                        inputType === 'date'             || inputDataType === 'date'
+                        inputType === 'date'             || inputDataType === 'date'             || 
+                        inputType === 'number'           || inputDataType === 'number'           || 
+                        inputType === 'integer'          || inputDataType === 'integer'
                         ) {
                         elms[i].setAttribute("type","tel");
                     }
